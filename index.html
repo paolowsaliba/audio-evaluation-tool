@@ -19,100 +19,89 @@
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         
         .header {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
         }
         
-        .header h1 {
+        h1 {
             color: #333;
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
         
-        .header p {
+        .subtitle {
             color: #666;
             font-size: 1.1rem;
         }
         
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-weight: 600;
         }
         
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
+        .status-connected {
+            background: #e8f5e9;
+            color: #2e7d32;
         }
         
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        .status-local {
+            background: #fff3e0;
+            color: #ef6c00;
         }
         
         .audio-section {
-            grid-column: 1;
+            margin: 30px 0;
         }
         
-        .feedback-section {
-            grid-column: 2;
-        }
-        
-        @media (max-width: 1024px) {
-            .audio-section, .feedback-section {
-                grid-column: 1;
-            }
-        }
-        
-        .section-title {
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .metadata {
+        .metadata-card {
             background: #f8f9fa;
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             margin-bottom: 20px;
+        }
+        
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
         }
         
         .metadata-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .metadata-item:last-child {
-            border-bottom: none;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
         }
         
         .metadata-label {
-            font-weight: 600;
-            color: #555;
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
         }
         
         .metadata-value {
+            font-size: 1.1rem;
             color: #333;
-            font-family: 'Courier New', monospace;
+            font-weight: 600;
         }
         
-        #audio-player {
+        audio {
             width: 100%;
             margin: 20px 0;
             border-radius: 10px;
@@ -122,10 +111,10 @@
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin: 20px 0;
         }
         
-        .btn {
+        button {
             padding: 12px 24px;
             border: none;
             border-radius: 8px;
@@ -157,11 +146,31 @@
             background: #e0e0e0;
         }
         
+        .progress-section {
+            margin: 30px 0;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .progress-title {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .progress-stats {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
         .progress-bar {
             background: #f0f0f0;
             border-radius: 10px;
             height: 30px;
-            margin-top: 20px;
             overflow: hidden;
             position: relative;
         }
@@ -176,63 +185,35 @@
             justify-content: center;
             color: white;
             font-weight: 600;
+            font-size: 0.9rem;
         }
         
-        .google-form-container {
-            width: 100%;
-            height: 600px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 20px;
+        .progress-fill.complete {
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
         }
         
-        .google-form-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .form-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
         }
         
-        .folder-selector {
+        h2 {
+            color: #333;
             margin-bottom: 20px;
         }
         
-        .folder-selector select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
-            cursor: pointer;
+        .form-placeholder {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            color: #666;
         }
         
-        .status-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 8px;
-            animation: pulse 2s infinite;
-        }
-        
-        .status-ready {
-            background: #4caf50;
-        }
-        
-        .status-loading {
-            background: #ff9800;
-        }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-            }
+        iframe {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .toast {
@@ -246,37 +227,67 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             display: none;
             animation: slideIn 0.3s ease;
+            max-width: 350px;
+            z-index: 1000;
         }
         
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
+                opacity: 0;
             }
             to {
                 transform: translateX(0);
+                opacity: 1;
             }
         }
         
-        .instructions {
-            background: #fff9e6;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
+        .toast.success {
+            background: #4caf50;
         }
         
-        .instructions h3 {
-            color: #f57c00;
-            margin-bottom: 10px;
+        .toast.error {
+            background: #f44336;
         }
         
-        .instructions ol {
-            margin-left: 20px;
-            color: #666;
+        .toast.info {
+            background: #2196f3;
         }
         
-        .instructions li {
-            margin: 5px 0;
+        .no-audio {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-style: italic;
+        }
+        
+        .cycle-indicator {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+        
+        .cycle-indicator.complete {
+            background: #e8f5e9;
+            color: #388e3c;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
         }
     </style>
 </head>
@@ -285,158 +296,104 @@
         <!-- Header -->
         <div class="header">
             <h1>🎧 Audio Evaluation Tool</h1>
-            <p>UCLA Trustworthy AI Lab - Synthetic Audio Quality Assessment</p>
+            <p class="subtitle">UCLA Trustworthy AI Lab - Synthetic Audio Quality Assessment</p>
+            {% if using_box %}
+            <span class="status-badge status-connected">📦 Box.com Connected</span>
+            {% else %}
+            <span class="status-badge status-local">💾 Using Local Files</span>
+            {% endif %}
         </div>
         
-        <!-- Main Content Grid -->
-        <div class="main-content">
-            <!-- Audio Player Section -->
-            <div class="card audio-section">
-                <h2 class="section-title">
-                    <span class="status-indicator status-ready"></span>
-                    Audio Sample Player
-                </h2>
-                
-                <!-- Instructions -->
-                <div class="instructions">
-                    <h3>📋 Instructions</h3>
-                    <ol>
-                        <li>Listen to the audio sample carefully</li>
-                        <li>Fill out the feedback form on the right</li>
-                        <li>Click "Next Sample" to continue evaluating</li>
-                        <li>Your progress is saved automatically</li>
-                    </ol>
-                </div>
-                
-                <!-- Folder Selector (for future Box.com integration) -->
-                <div class="folder-selector">
-                    <label for="folder-select" style="font-weight: 600; color: #555; margin-bottom: 8px; display: block;">
-                        Select Audio Category:
-                    </label>
-                    <select id="folder-select">
-                        <option value="all">All Audio Files</option>
-                        {% for folder in subfolders %}
-                        <option value="{{ folder }}">{{ folder }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <!-- Metadata Display -->
-                <div class="metadata">
+        <!-- Audio Section -->
+        {% if audio_file %}
+        <div class="audio-section">
+            <!-- Metadata Card -->
+            <div class="metadata-card">
+                <div class="metadata-grid">
                     <div class="metadata-item">
-                        <span class="metadata-label">File Name:</span>
-                        <span class="metadata-value" id="file-label">{{ audio_file or 'No file selected' }}</span>
+                        <div class="metadata-label">Current File</div>
+                        <div class="metadata-value" id="file-label">{{ audio_file }}</div>
                     </div>
                     <div class="metadata-item">
-                        <span class="metadata-label">Sample #:</span>
-                        <span class="metadata-value" id="sample-number">1</span>
+                        <div class="metadata-label">Sample Number</div>
+                        <div class="metadata-value" id="sample-number">{{ samples_evaluated + 1 }}</div>
                     </div>
                     <div class="metadata-item">
-                        <span class="metadata-label">Language:</span>
-                        <span class="metadata-value" id="language">Unknown</span>
+                        <div class="metadata-label">Files Remaining</div>
+                        <div class="metadata-value" id="remaining-count">
+                            {{ total_samples - samples_evaluated - 1 if total_samples else 0 }}
+                        </div>
                     </div>
                     <div class="metadata-item">
-                        <span class="metadata-label">Duration:</span>
-                        <span class="metadata-value" id="duration">--:--</span>
-                    </div>
-                </div>
-                
-                <!-- Audio Player -->
-                {% if audio_file %}
-                <audio id="audio-player" controls>
-                    <source id="audio-source" src="{{ url_for('static', filename=audio_file) }}" type="audio/wav">
-                    Your browser does not support the audio element.
-                </audio>
-                {% else %}
-                <p style="color: #999; text-align: center; padding: 20px;">No audio files found. Please add .wav files to the static folder.</p>
-                {% endif %}
-                
-                <!-- Control Buttons -->
-                <div class="controls">
-                    <button class="btn btn-primary" onclick="loadNextSample()">
-                        Next Sample →
-                    </button>
-                    <button class="btn btn-secondary" onclick="replayAudio()">
-                        ↻ Replay
-                    </button>
-                    <button class="btn btn-secondary" onclick="resetSession()">
-                        Reset Session
-                    </button>
-                </div>
-                
-                <!-- Progress Bar -->
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill">
-                        <span id="progress-text">0 / 0 evaluated</span>
+                        <div class="metadata-label">Total Files</div>
+                        <div class="metadata-value" id="total-count">{{ total_samples or 0 }}</div>
                     </div>
                 </div>
             </div>
             
-            <!-- Feedback Form Section -->
-            <div class="card feedback-section">
-                <h2 class="section-title">📝 Evaluation Form</h2>
-                
-                <!-- Google Form Embed -->
-                <div class="google-form-container">
-                    {% if google_form_url and google_form_url != "YOUR_GOOGLE_FORM_EMBED_URL_HERE" %}
-                    <iframe src="{{ google_form_url }}" 
-                            width="100%" 
-                            height="600" 
-                            frameborder="0" 
-                            marginheight="0" 
-                            marginwidth="0">
-                        Loading form...
-                    </iframe>
-                    {% else %}
-                    <div style="padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
-                        <h3 style="color: #666; margin-bottom: 20px;">Google Form Not Configured</h3>
-                        <p style="color: #999; margin-bottom: 20px;">To embed your Google Form:</p>
-                        <ol style="text-align: left; max-width: 400px; margin: 0 auto; color: #666;">
-                            <li>Create a Google Form for audio evaluation</li>
-                            <li>Click "Send" → "Embed HTML"</li>
-                            <li>Copy the iframe src URL</li>
-                            <li>Update GOOGLE_FORM_EMBED_URL in app.py</li>
-                        </ol>
-                        
-                        <!-- Fallback local form -->
-                        <div style="margin-top: 30px; text-align: left;">
-                            <h4 style="color: #333; margin-bottom: 15px;">Quick Evaluation (Local Backup)</h4>
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Audio Quality:</label>
-                                <select id="quality-rating" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ddd;">
-                                    <option value="">Select rating...</option>
-                                    <option value="5">5 - Excellent</option>
-                                    <option value="4">4 - Good</option>
-                                    <option value="3">3 - Average</option>
-                                    <option value="2">2 - Poor</option>
-                                    <option value="1">1 - Very Poor</option>
-                                </select>
-                            </div>
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Naturalness:</label>
-                                <select id="naturalness-rating" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ddd;">
-                                    <option value="">Select rating...</option>
-                                    <option value="5">5 - Very Natural</option>
-                                    <option value="4">4 - Natural</option>
-                                    <option value="3">3 - Somewhat Natural</option>
-                                    <option value="2">2 - Unnatural</option>
-                                    <option value="1">1 - Very Unnatural</option>
-                                </select>
-                            </div>
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Comments:</label>
-                                <textarea id="comments" 
-                                        style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ddd; min-height: 100px;"
-                                        placeholder="Enter any additional feedback..."></textarea>
-                            </div>
-                            <button class="btn btn-primary" onclick="submitLocalFeedback()" style="width: 100%;">
-                                Submit Evaluation
-                            </button>
-                        </div>
+            <!-- Audio Player -->
+            <audio id="audio-player" controls>
+                <source id="audio-source" src="{{ url_for('static', filename=audio_file) }}" type="audio/wav">
+                Your browser does not support audio playback.
+            </audio>
+            
+            <!-- Control Buttons -->
+            <div class="controls">
+                <button class="btn-primary" onclick="loadNextSample()">
+                    Next Sample →
+                </button>
+                <button class="btn-secondary" onclick="replayAudio()">
+                    ↻ Replay
+                </button>
+                <button class="btn-secondary" onclick="resetSession()">
+                    🔄 Reset Session
+                </button>
+            </div>
+            
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <span class="progress-title">Evaluation Progress</span>
+                    <span class="progress-stats" id="progress-stats">
+                        {{ samples_evaluated }} of {{ total_samples or 0 }} evaluated
+                    </span>
+                    <span id="cycle-badge" class="cycle-indicator" style="display: none;">
+                        Cycle Complete!
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill">
+                        <span id="progress-text">0%</span>
                     </div>
-                    {% endif %}
                 </div>
             </div>
+        </div>
+        {% else %}
+        <div class="no-audio">
+            <p>📂 No audio files found</p>
+            <p>Please upload .wav files to the static folder or configure Box.com integration.</p>
+        </div>
+        {% endif %}
+        
+        <!-- Feedback Form Section -->
+        <div class="form-section">
+            <h2>📝 Evaluation Form</h2>
+            {% if google_form_url and google_form_url != "YOUR_GOOGLE_FORM_EMBED_URL_HERE" and google_form_url != "YOUR-ACTUAL-FORM-ID" %}
+            <iframe src="{{ google_form_url }}" width="100%" height="600" frameborder="0">
+                Loading form...
+            </iframe>
+            {% else %}
+            <div class="form-placeholder">
+                <h3>Google Form Not Configured</h3>
+                <p>To enable the evaluation form:</p>
+                <ol style="text-align: left; max-width: 400px; margin: 20px auto;">
+                    <li>Create a Google Form for audio evaluation</li>
+                    <li>Click "Send" → "Embed HTML"</li>
+                    <li>Copy the iframe src URL</li>
+                    <li>Update GOOGLE_FORM_EMBED_URL in app.py</li>
+                </ol>
+            </div>
+            {% endif %}
         </div>
     </div>
     
@@ -444,14 +401,15 @@
     <div class="toast" id="toast"></div>
     
     <script>
+        // Global variables
         let samplesEvaluated = {{ samples_evaluated }};
-        let totalSamples = 0;
+        let totalSamples = {{ total_samples or 0 }};
+        let remainingSamples = {{ remaining_samples if remaining_samples is defined else (total_samples - samples_evaluated - 1) if total_samples else 0 }};
         
         function loadNextSample() {
-            const folder = document.getElementById('folder-select').value;
             showToast('Loading next sample...');
             
-            fetch(`/next-audio?folder=${folder}`)
+            fetch('/next-audio')
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -459,150 +417,140 @@
                         return;
                     }
                     
-                    const newFile = data.audio_file;
+                    // Update audio player
                     const audioPlayer = document.getElementById('audio-player');
                     const source = document.getElementById('audio-source');
-                    
-                    source.src = '/static/' + newFile;
+                    source.src = '/static/' + data.audio_file;
                     audioPlayer.load();
                     
-                    // Update metadata
-                    document.getElementById('file-label').innerText = newFile;
+                    // Update metadata display
+                    document.getElementById('file-label').innerText = data.audio_file;
                     document.getElementById('sample-number').innerText = data.samples_evaluated + 1;
+                    document.getElementById('remaining-count').innerText = data.remaining_samples;
+                    document.getElementById('total-count').innerText = data.total_samples;
                     
                     // Update progress
-                    updateProgress(data.samples_evaluated, data.total_samples);
+                    updateProgress(data.samples_evaluated, data.total_samples, data.remaining_samples);
                     
-                    // Clear local form if present
-                    clearLocalForm();
-                    
-                    showToast('New sample loaded!', 'success');
-                    
-                    // Fetch additional metadata
-                    fetchMetadata(newFile);
+                    // Show appropriate message
+                    if (data.cycle_complete) {
+                        showToast('🎉 All files evaluated! Starting new cycle...', 'success');
+                        showCycleBadge(true);
+                    } else if (data.remaining_samples === 0) {
+                        showToast('📍 Last file in this cycle!', 'info');
+                    } else {
+                        showToast(`✓ New sample loaded (${data.remaining_samples} remaining)`, 'success');
+                        showCycleBadge(false);
+                    }
                 })
                 .catch(error => {
-                    console.error('Error loading new audio:', error);
+                    console.error('Error:', error);
                     showToast('Failed to load new sample', 'error');
                 });
         }
         
-        function fetchMetadata(filename) {
-            fetch(`/get-metadata/${filename}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('language').innerText = data.language || 'Unknown';
-                    // Duration will be set by audio element when loaded
-                });
+        function updateProgress(evaluated, total, remaining) {
+            const percentage = total > 0 ? (evaluated / total) * 100 : 0;
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            const progressStats = document.getElementById('progress-stats');
+            
+            // Update progress bar
+            progressFill.style.width = `${percentage}%`;
+            progressText.innerText = `${Math.round(percentage)}%`;
+            
+            // Update stats text
+            progressStats.innerText = `${evaluated} of ${total} evaluated`;
+            
+            // Change color when cycle is complete
+            if (remaining === 0 && evaluated > 0) {
+                progressFill.classList.add('complete');
+            } else {
+                progressFill.classList.remove('complete');
+            }
+        }
+        
+        function showCycleBadge(show) {
+            const badge = document.getElementById('cycle-badge');
+            if (show) {
+                badge.style.display = 'inline-block';
+                badge.classList.add('complete');
+                setTimeout(() => {
+                    badge.style.display = 'none';
+                }, 5000);
+            } else {
+                badge.style.display = 'none';
+            }
         }
         
         function replayAudio() {
             const audioPlayer = document.getElementById('audio-player');
             audioPlayer.currentTime = 0;
             audioPlayer.play();
+            showToast('Replaying audio', 'info');
         }
         
         function resetSession() {
-            if (confirm('Are you sure you want to reset your evaluation session?')) {
+            if (confirm('Are you sure you want to reset your evaluation session? This will start over from the beginning.')) {
                 fetch('/reset-session', { method: 'POST' })
                     .then(response => response.json())
                     .then(data => {
                         showToast('Session reset successfully', 'success');
                         setTimeout(() => location.reload(), 1500);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showToast('Failed to reset session', 'error');
                     });
             }
-        }
-        
-        function updateProgress(evaluated, total) {
-            samplesEvaluated = evaluated;
-            totalSamples = total;
-            
-            const percentage = total > 0 ? (evaluated / total) * 100 : 0;
-            const progressFill = document.getElementById('progress-fill');
-            const progressText = document.getElementById('progress-text');
-            
-            progressFill.style.width = `${percentage}%`;
-            progressText.innerText = `${evaluated} / ${total} evaluated`;
-        }
-        
-        function submitLocalFeedback() {
-            const quality = document.getElementById('quality-rating').value;
-            const naturalness = document.getElementById('naturalness-rating').value;
-            const comments = document.getElementById('comments').value;
-            
-            if (!quality || !naturalness) {
-                showToast('Please fill in all ratings', 'error');
-                return;
-            }
-            
-            const feedback = {
-                quality: quality,
-                naturalness: naturalness,
-                comments: comments
-            };
-            
-            fetch('/save-feedback', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(feedback)
-            })
-            .then(response => response.json())
-            .then(data => {
-                showToast('Feedback submitted successfully!', 'success');
-                clearLocalForm();
-                // Automatically load next sample after submission
-                setTimeout(loadNextSample, 1000);
-            })
-            .catch(error => {
-                console.error('Error submitting feedback:', error);
-                showToast('Failed to submit feedback', 'error');
-            });
-        }
-        
-        function clearLocalForm() {
-            const qualitySelect = document.getElementById('quality-rating');
-            const naturalnessSelect = document.getElementById('naturalness-rating');
-            const commentsTextarea = document.getElementById('comments');
-            
-            if (qualitySelect) qualitySelect.value = '';
-            if (naturalnessSelect) naturalnessSelect.value = '';
-            if (commentsTextarea) commentsTextarea.value = '';
         }
         
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
+            toast.className = 'toast ' + type;
             toast.style.display = 'block';
-            
-            if (type === 'error') {
-                toast.style.background = '#f44336';
-            } else if (type === 'success') {
-                toast.style.background = '#4caf50';
-            } else {
-                toast.style.background = '#333';
-            }
             
             setTimeout(() => {
                 toast.style.display = 'none';
             }, 3000);
         }
         
-        // Update audio duration when loaded
-        document.getElementById('audio-player').addEventListener('loadedmetadata', function() {
-            const duration = this.duration;
-            const minutes = Math.floor(duration / 60);
-            const seconds = Math.floor(duration % 60);
-            document.getElementById('duration').innerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        });
+        function checkProgress() {
+            fetch('/progress')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Session progress:', data);
+                    updateProgress(data.samples_evaluated, data.total_samples, data.remaining_samples);
+                    
+                    if (data.played_files && data.played_files.length > 0) {
+                        console.log('Files already played:', data.played_files);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking progress:', error);
+                });
+        }
         
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const audioFile = "{{ audio_file }}";
-            if (audioFile && audioFile !== 'None') {
-                fetchMetadata(audioFile);
-            }
+            // Update initial progress display
+            updateProgress(samplesEvaluated, totalSamples, remainingSamples);
+            
+            // Check progress from server
+            checkProgress();
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'n' || e.key === 'N') {
+                    loadNextSample();
+                } else if (e.key === 'r' || e.key === 'R') {
+                    replayAudio();
+                }
+            });
+            
+            console.log('Audio Evaluation Tool loaded');
+            console.log('Keyboard shortcuts: N = Next Sample, R = Replay');
         });
     </script>
 </body>
