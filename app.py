@@ -24,7 +24,7 @@ class Config:
     USE_BOX = False  # Set to True when Box.com is configured
     
     # Google Form embed URL (replace with your actual form)
-    GOOGLE_FORM_EMBED_URL = "YOUR_GOOGLE_FORM_EMBED_URL_HERE"
+    GOOGLE_FORM_EMBED_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfRvaeYlDVMu2l1ojW0nl51WiMYb729e29cl0X3yZjMQ-io-Q/viewform?embedded=true"
 
 config = Config()
 
@@ -167,4 +167,5 @@ def reset_session():
     return jsonify({'status': 'success', 'message': 'Session reset'})
 
 if __name__ == "__main__":
+
     app.run(debug=True)
