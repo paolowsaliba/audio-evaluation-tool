@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio Evaluation Tool - UCLA Trustworthy AI Lab</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -26,24 +28,24 @@
             padding: 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-        
+
         .header {
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 2px solid #f0f0f0;
         }
-        
+
         h1 {
             color: #333;
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
-        
+
         .subtitle {
             color: #666;
             font-size: 1.1rem;
         }
-        
+
         .status-badge {
             display: inline-block;
             padding: 5px 12px;
@@ -52,41 +54,58 @@
             margin-top: 10px;
             font-weight: 600;
         }
-        
+
         .status-connected {
             background: #e8f5e9;
             color: #2e7d32;
         }
-        
+
         .status-local {
             background: #fff3e0;
             color: #ef6c00;
         }
-        
+
+        .auto-update-indicator {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        .auto-update-indicator.refreshing {
+            background: #fff3e0;
+            color: #ef6c00;
+            animation: pulse 1s infinite;
+        }
+
         .audio-section {
             margin: 30px 0;
         }
-        
+
         .metadata-card {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
         }
-        
+
         .metadata-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
         }
-        
+
         .metadata-item {
             padding: 10px;
             background: white;
             border-radius: 8px;
             border: 1px solid #e0e0e0;
         }
-        
+
         .metadata-label {
             font-size: 0.85rem;
             color: #888;
@@ -94,26 +113,31 @@
             letter-spacing: 0.5px;
             margin-bottom: 5px;
         }
-        
+
         .metadata-value {
             font-size: 1.1rem;
             color: #333;
             font-weight: 600;
         }
-        
+
+        .metadata-value.filename {
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+
         audio {
             width: 100%;
             margin: 20px 0;
             border-radius: 10px;
         }
-        
+
         .controls {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             margin: 20px 0;
         }
-        
+
         button {
             padding: 12px 24px;
             border: none;
@@ -126,47 +150,57 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        
+
         .btn-secondary {
             background: #f0f0f0;
             color: #333;
         }
-        
+
         .btn-secondary:hover {
             background: #e0e0e0;
         }
-        
+
+        .btn-refresh {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .btn-refresh:hover {
+            background: #bbdefb;
+        }
+
         .progress-section {
             margin: 30px 0;
         }
-        
+
         .progress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            flex-wrap: wrap;
         }
-        
+
         .progress-title {
             font-weight: 600;
             color: #333;
         }
-        
+
         .progress-stats {
             color: #666;
             font-size: 0.95rem;
         }
-        
+
         .progress-bar {
             background: #f0f0f0;
             border-radius: 10px;
@@ -174,7 +208,7 @@
             overflow: hidden;
             position: relative;
         }
-        
+
         .progress-fill {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             height: 100%;
@@ -187,35 +221,40 @@
             font-weight: 600;
             font-size: 0.9rem;
         }
-        
+
         .progress-fill.complete {
             background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
         }
-        
+
         .form-section {
             margin-top: 40px;
             padding-top: 30px;
             border-top: 2px solid #f0f0f0;
         }
-        
+
         h2 {
             color: #333;
             margin-bottom: 20px;
         }
-        
-        .form-placeholder {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            color: #666;
+
+        .form-info {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
         }
-        
+
+        .form-info .info-text {
+            color: #2e7d32;
+            font-size: 0.95rem;
+        }
+
         iframe {
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
+
         .toast {
             position: fixed;
             bottom: 30px;
@@ -230,7 +269,7 @@
             max-width: 350px;
             z-index: 1000;
         }
-        
+
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -241,26 +280,26 @@
                 opacity: 1;
             }
         }
-        
+
         .toast.success {
             background: #4caf50;
         }
-        
+
         .toast.error {
             background: #f44336;
         }
-        
+
         .toast.info {
             background: #2196f3;
         }
-        
+
         .no-audio {
             text-align: center;
             padding: 40px;
             color: #999;
             font-style: italic;
         }
-        
+
         .cycle-indicator {
             display: inline-block;
             background: #e3f2fd;
@@ -271,13 +310,13 @@
             margin-left: 10px;
             font-weight: 600;
         }
-        
+
         .cycle-indicator.complete {
             background: #e8f5e9;
             color: #388e3c;
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
@@ -289,6 +328,12 @@
                 box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
             }
         }
+
+        .last-update {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -297,13 +342,13 @@
         <div class="header">
             <h1>🎧 Audio Evaluation Tool</h1>
             <p class="subtitle">UCLA Trustworthy AI Lab - Synthetic Audio Quality Assessment</p>
-            {% if using_box %}
-            <span class="status-badge status-connected">📦 Box.com Connected</span>
-            {% else %}
-            <span class="status-badge status-local">💾 Using Local Files</span>
-            {% endif %}
+            <span class="status-badge status-connected">📁 Google Drive Connected</span>
+            <span class="auto-update-indicator" id="auto-update-indicator">
+                ⚡ Auto-refresh every {{ cache_duration }} min
+            </span>
+            <div class="last-update">Last updated: <span id="last-update-time">{{ last_update }}</span></div>
         </div>
-        
+
         <!-- Audio Section -->
         {% if audio_file %}
         <div class="audio-section">
@@ -312,7 +357,7 @@
                 <div class="metadata-grid">
                     <div class="metadata-item">
                         <div class="metadata-label">Current File</div>
-                        <div class="metadata-value" id="file-label">{{ audio_file }}</div>
+                        <div class="metadata-value filename" id="file-label">{{ audio_file }}</div>
                     </div>
                     <div class="metadata-item">
                         <div class="metadata-label">Sample Number</div>
@@ -330,13 +375,17 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Audio Player -->
             <audio id="audio-player" controls>
+                {% if audio_file_info %}
+                <source id="audio-source" src="{{ audio_file_info.download_url }}" type="audio/wav">
+                {% else %}
                 <source id="audio-source" src="{{ url_for('static', filename=audio_file) }}" type="audio/wav">
+                {% endif %}
                 Your browser does not support audio playback.
             </audio>
-            
+
             <!-- Control Buttons -->
             <div class="controls">
                 <button class="btn-primary" onclick="loadNextSample()">
@@ -345,11 +394,14 @@
                 <button class="btn-secondary" onclick="replayAudio()">
                     ↻ Replay
                 </button>
+                <button class="btn-refresh" onclick="refreshFiles()">
+                    🔄 Refresh Files
+                </button>
                 <button class="btn-secondary" onclick="resetSession()">
                     🔄 Reset Session
                 </button>
             </div>
-            
+
             <!-- Progress Section -->
             <div class="progress-section">
                 <div class="progress-header">
@@ -371,44 +423,36 @@
         {% else %}
         <div class="no-audio">
             <p>📂 No audio files found</p>
-            <p>Please upload .wav files to the static folder or configure Box.com integration.</p>
+            <p>Please add audio files to the Google Drive folder.</p>
+            <button class="btn-refresh" onclick="refreshFiles()">🔄 Check for Files</button>
         </div>
         {% endif %}
-        
+
         <!-- Feedback Form Section -->
         <div class="form-section">
             <h2>📝 Evaluation Form</h2>
-            {% if google_form_url and google_form_url != "YOUR_GOOGLE_FORM_EMBED_URL_HERE" and google_form_url != "YOUR-ACTUAL-FORM-ID" %}
-            <iframe src="{{ google_form_url }}" width="100%" height="600" frameborder="0">
+            <div class="form-info">
+                <div class="info-text">✓ Audio filename is automatically pre-filled in the form</div>
+            </div>
+            <iframe id="google-form" src="{{ google_form_url }}" width="100%" height="600" frameborder="0">
                 Loading form...
             </iframe>
-            {% else %}
-            <div class="form-placeholder">
-                <h3>Google Form Not Configured</h3>
-                <p>To enable the evaluation form:</p>
-                <ol style="text-align: left; max-width: 400px; margin: 20px auto;">
-                    <li>Create a Google Form for audio evaluation</li>
-                    <li>Click "Send" → "Embed HTML"</li>
-                    <li>Copy the iframe src URL</li>
-                    <li>Update GOOGLE_FORM_EMBED_URL in app.py</li>
-                </ol>
-            </div>
-            {% endif %}
         </div>
     </div>
-    
+
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
-    
+
     <script>
         // Global variables
         let samplesEvaluated = {{ samples_evaluated }};
         let totalSamples = {{ total_samples or 0 }};
         let remainingSamples = {{ remaining_samples if remaining_samples is defined else (total_samples - samples_evaluated - 1) if total_samples else 0 }};
-        
+        let autoRefreshInterval;
+
         function loadNextSample() {
             showToast('Loading next sample...');
-            
+
             fetch('/next-audio')
                 .then(response => response.json())
                 .then(data => {
@@ -416,22 +460,26 @@
                         showToast('Error: ' + data.error, 'error');
                         return;
                     }
-                    
+
                     // Update audio player
                     const audioPlayer = document.getElementById('audio-player');
                     const source = document.getElementById('audio-source');
-                    source.src = '/static/' + data.audio_file;
+                    source.src = data.audio_url;
                     audioPlayer.load();
-                    
+
+                    // Update Google Form with new filename
+                    const formIframe = document.getElementById('google-form');
+                    formIframe.src = data.form_url;
+
                     // Update metadata display
                     document.getElementById('file-label').innerText = data.audio_file;
                     document.getElementById('sample-number').innerText = data.samples_evaluated + 1;
                     document.getElementById('remaining-count').innerText = data.remaining_samples;
                     document.getElementById('total-count').innerText = data.total_samples;
-                    
+
                     // Update progress
                     updateProgress(data.samples_evaluated, data.total_samples, data.remaining_samples);
-                    
+
                     // Show appropriate message
                     if (data.cycle_complete) {
                         showToast('🎉 All files evaluated! Starting new cycle...', 'success');
@@ -448,20 +496,20 @@
                     showToast('Failed to load new sample', 'error');
                 });
         }
-        
+
         function updateProgress(evaluated, total, remaining) {
             const percentage = total > 0 ? (evaluated / total) * 100 : 0;
             const progressFill = document.getElementById('progress-fill');
             const progressText = document.getElementById('progress-text');
             const progressStats = document.getElementById('progress-stats');
-            
+
             // Update progress bar
             progressFill.style.width = `${percentage}%`;
             progressText.innerText = `${Math.round(percentage)}%`;
-            
+
             // Update stats text
             progressStats.innerText = `${evaluated} of ${total} evaluated`;
-            
+
             // Change color when cycle is complete
             if (remaining === 0 && evaluated > 0) {
                 progressFill.classList.add('complete');
@@ -469,7 +517,7 @@
                 progressFill.classList.remove('complete');
             }
         }
-        
+
         function showCycleBadge(show) {
             const badge = document.getElementById('cycle-badge');
             if (show) {
@@ -482,14 +530,50 @@
                 badge.style.display = 'none';
             }
         }
-        
+
         function replayAudio() {
             const audioPlayer = document.getElementById('audio-player');
             audioPlayer.currentTime = 0;
             audioPlayer.play();
             showToast('Replaying audio', 'info');
         }
-        
+
+        function refreshFiles() {
+            const indicator = document.getElementById('auto-update-indicator');
+            indicator.classList.add('refreshing');
+            indicator.textContent = '🔄 Refreshing...';
+            
+            showToast('Checking for new files in Google Drive...', 'info');
+            
+            fetch('/api/refresh', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(`✓ Found ${data.count} files in Google Drive`, 'success');
+                        updateLastUpdateTime();
+                        
+                        // Check if new files were added
+                        if (data.count > totalSamples) {
+                            const newFiles = data.count - totalSamples;
+                            showToast(`🎉 ${newFiles} new file(s) detected! Reloading...`, 'success');
+                            setTimeout(() => location.reload(), 2000);
+                        }
+                    }
+                    
+                    // Reset indicator
+                    setTimeout(() => {
+                        indicator.classList.remove('refreshing');
+                        indicator.textContent = `⚡ Auto-refresh every {{ cache_duration }} min`;
+                    }, 1000);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Failed to refresh files', 'error');
+                    indicator.classList.remove('refreshing');
+                    indicator.textContent = `⚡ Auto-refresh every {{ cache_duration }} min`;
+                });
+        }
+
         function resetSession() {
             if (confirm('Are you sure you want to reset your evaluation session? This will start over from the beginning.')) {
                 fetch('/reset-session', { method: 'POST' })
@@ -504,25 +588,25 @@
                     });
             }
         }
-        
+
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.className = 'toast ' + type;
             toast.style.display = 'block';
-            
+
             setTimeout(() => {
                 toast.style.display = 'none';
             }, 3000);
         }
-        
+
         function checkProgress() {
             fetch('/progress')
                 .then(response => response.json())
                 .then(data => {
                     console.log('Session progress:', data);
                     updateProgress(data.samples_evaluated, data.total_samples, data.remaining_samples);
-                    
+
                     if (data.played_files && data.played_files.length > 0) {
                         console.log('Files already played:', data.played_files);
                     }
@@ -531,26 +615,52 @@
                     console.error('Error checking progress:', error);
                 });
         }
-        
+
+        function updateLastUpdateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            document.getElementById('last-update-time').textContent = timeString;
+        }
+
+        function setupAutoRefresh() {
+            // Auto-refresh every 5 minutes (or whatever is configured)
+            const refreshMinutes = {{ cache_duration }};
+            autoRefreshInterval = setInterval(() => {
+                console.log('Auto-refreshing file list...');
+                refreshFiles();
+            }, refreshMinutes * 60 * 1000);
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             // Update initial progress display
             updateProgress(samplesEvaluated, totalSamples, remainingSamples);
-            
+
             // Check progress from server
             checkProgress();
-            
+
+            // Setup auto-refresh
+            setupAutoRefresh();
+
             // Add keyboard shortcuts
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'n' || e.key === 'N') {
                     loadNextSample();
                 } else if (e.key === 'r' || e.key === 'R') {
                     replayAudio();
+                } else if (e.key === 'f' || e.key === 'F') {
+                    refreshFiles();
                 }
             });
-            
+
             console.log('Audio Evaluation Tool loaded');
-            console.log('Keyboard shortcuts: N = Next Sample, R = Replay');
+            console.log('Using Google Drive with auto-refresh');
+            console.log('Keyboard shortcuts: N = Next Sample, R = Replay, F = Force Refresh');
+            console.log('Form auto-fill enabled for filename');
         });
     </script>
 </body>
